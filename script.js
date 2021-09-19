@@ -73,25 +73,23 @@ class MyView extends Croquet.View {
   handleUpdate (data) {
     const mostRecent = data[data.length - 1]
 
-    ctx.beginPath()
-    ctx.moveTo(mostRecent[0].x, mostRecent[0].y)
-
-    for (let i = 1; i < mostRecent.length; i++) {
-      ctx.lineTo(mostRecent[i].x, mostRecent[i].y)
-    }
-    ctx.stroke()
+    this.drawPlot(mostRecent)
   }
 
   drawWhiteboard(model) {
     model.plots.forEach(plot => {
-      ctx.beginPath()
-      ctx.moveTo(plot[0].x, plot[0].y)
-  
-      for (let i = 1; i < plot.length; i++) {
-        ctx.lineTo(plot[i].x, plot[i].y)
-      }
-      ctx.stroke()
+      this.drawPlot(plot)
     })
+  }
+
+  drawPlot(plot) {
+    ctx.beginPath()
+    ctx.moveTo(plot[0].x, plot[0].y)
+
+    for (let i = 1; i < plot.length; i++) {
+      ctx.lineTo(plot[i].x, plot[i].y)
+    }
+    ctx.stroke()
   }
 }
 
