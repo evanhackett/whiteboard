@@ -117,7 +117,7 @@ class MyView extends Croquet.View {
 }
 
 Croquet.Session.join({
-  appId: 'com.evanhackett.whiteboard2',
+  appId: 'com.evanhackett.whiteboard',
   apiKey: '1ybAFmqJ8ay4Aakg4As5MJxne3sf5HzCgFaeM9Nne',
   name: Croquet.App.autoSession(),
   password: Croquet.App.autoPassword(),
