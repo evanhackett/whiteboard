@@ -23,6 +23,28 @@ class MyModel extends Croquet.Model {
 }
 MyModel.register('MyModel')
 
+function throttle(fn, maxInvocationsPerSec) {
+  // Returns a new function which is a throttled version of the given function. 
+  // Throttled to a maximum of maxInvocationsPerSec.
+  let wait = false
+
+  function throttled(args) {
+    // don't call the function if we are still waiting
+    if (wait) {
+      return
+    } else {
+      fn(args)
+      wait = true;
+      // after the given period of time, allow function to be called again
+      setTimeout(function () {
+        wait = false;
+      }, 1000 / maxInvocationsPerSec)
+    }
+  }
+
+  return throttled
+}
+
 class MyView extends Croquet.View {
   constructor (model) {
     super(model)
@@ -35,8 +57,9 @@ class MyView extends Croquet.View {
     // array to collect coordinates
     this.plots = []
 
+    const timesPerSecond = 20
+    canvas.addEventListener('mousemove', throttle(this.draw.bind(this), timesPerSecond), false)
     canvas.addEventListener('mousedown', this.startDraw.bind(this), false)
-    canvas.addEventListener('mousemove', this.draw.bind(this), false)
     canvas.addEventListener('mouseup', this.endDraw.bind(this), false)
 
     canvas.addEventListener('touchstart', this.startDraw.bind(this), false)
